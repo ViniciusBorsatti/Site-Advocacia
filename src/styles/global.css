@@ -1,0 +1,138 @@
+/* Tokens de design. Derivados do cartão de visitas: vermelho sobre papel branco. */
+
+:root {
+  --papel: #fdfcfb;
+  --tinta: #191513;
+  --carmim: #9e1b1e;
+  --carmim-claro: #c0272d;
+  --cinza: #6e6560;
+  --linha: #e5e0db;
+
+  --display: 'Marcellus', Georgia, serif;
+  --corpo: 'Spectral', Georgia, serif;
+
+  --suave: cubic-bezier(0.22, 0.7, 0.28, 1);
+
+  --largura: 1140px;
+  --respiro: 28px;
+  --altura-topo: 78px;
+  --altura-topo-fixo: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--corpo);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--carmim);
+  outline-offset: 4px;
+}
+
+.env {
+  width: 100%;
+  max-width: var(--largura);
+  margin: 0 auto;
+  padding: 0 var(--respiro);
+}
+
+.etiqueta {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--carmim);
+  font-weight: 500;
+}
+
+/* Revelação em rolagem: a classe .visto é aplicada pelo IntersectionObserver. */
+.rev {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.85s var(--suave),
+    transform 0.85s var(--suave);
+  transition-delay: var(--atraso, 0s);
+}
+
+.rev.visto {
+  opacity: 1;
+  transform: none;
+}
+
+.secao {
+  padding: clamp(64px, 9vw, 108px) 0;
+  border-top: 1px solid var(--linha);
+}
+
+.secao-titulo {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.15;
+  margin-top: 14px;
+}
+
+.secao-titulo::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 70px;
+  background: var(--carmim);
+  margin-top: 22px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s var(--suave) 0.25s;
+}
+
+.rev.visto .secao-titulo::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 520px) {
+  body {
+    font-size: 16px;
+  }
+  :root {
+    --respiro: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .rev {
+    opacity: 1;
+    transform: none;
+  }
+  .secao-titulo::after {
+    transform: scaleX(1);
+  }
+}

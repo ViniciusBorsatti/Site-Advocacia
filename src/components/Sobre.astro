@@ -1,0 +1,41 @@
+---
+import { escritorio } from '../data/escritorio';
+---
+
+<section class="secao" id="sobre">
+  <div class="env sobre-grade">
+    <div class="rev">
+      <p class="etiqueta">Sobre</p>
+      <h2 class="secao-titulo">O escritório</h2>
+    </div>
+
+    <div class="sobre-texto rev" style="--atraso:.12s">
+      {escritorio.sobre.map((paragrafo) => <p>{paragrafo}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sobre-grade {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .sobre-texto p {
+    color: var(--cinza);
+    font-size: 18px;
+  }
+
+  .sobre-texto p + p {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 880px) {
+    .sobre-grade {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+  }
+</style>

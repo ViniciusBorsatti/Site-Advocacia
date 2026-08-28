@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import MarcaJustica from '../components/MarcaJustica.astro';
+import Cabecalho from '../components/Cabecalho.astro';
+import Capa from '../components/Capa.astro';
+import Sobre from '../components/Sobre.astro';
+import Areas from '../components/Areas.astro';
+import Contato from '../components/Contato.astro';
+import Rodape from '../components/Rodape.astro';
+import { escritorio } from '../data/escritorio';
+
+const titulo = `${escritorio.nome} — Advogada | ${escritorio.endereco.cidade}/${escritorio.endereco.uf}`;
+const descricao = `${escritorio.nome}, advogada inscrita na ${escritorio.oab}. Escritório no ${escritorio.endereco.bairro} de ${escritorio.endereco.cidade}, Rio Grande do Sul.`;
+---
+
+<Base titulo={titulo} descricao={descricao}>
+  <MarcaJustica />
+  <Cabecalho />
+  <main>
+    <Capa />
+    <Sobre />
+    <Areas />
+    <Contato />
+  </main>
+  <Rodape />
+</Base>

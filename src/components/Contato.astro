@@ -1,0 +1,162 @@
+---
+import { escritorio, linkMapa } from '../data/escritorio';
+
+const { endereco, telefones, whatsapp } = escritorio;
+const ordenados = [...telefones].sort(
+  (a, b) => Number(b.principal ?? false) - Number(a.principal ?? false),
+);
+---
+
+<section class="secao" id="contato">
+  <div class="env">
+    <div class="rev">
+      <p class="etiqueta">Contato</p>
+      <h2 class="secao-titulo">Atendimento</h2>
+    </div>
+
+    <div class="contato-grade">
+      <div class="rev" style="--atraso:.1s">
+        <div class="bloco">
+          <h3>Endereço</h3>
+          <p>{endereco.logradouro} — {endereco.complemento}</p>
+          <p><small>{endereco.bairro} · {endereco.cidade} — {endereco.uf}</small></p>
+          <a class="mapa-link" href={linkMapa(endereco)} target="_blank" rel="noopener">
+            Ver no mapa
+          </a>
+        </div>
+
+        <div class="bloco">
+          <h3>Horário</h3>
+          <p>{escritorio.horario}</p>
+          <p><small>{escritorio.observacaoHorario}</small></p>
+        </div>
+      </div>
+
+      <div class="rev" style="--atraso:.2s">
+        <div class="bloco">
+          <h3>Telefones</h3>
+          {
+            ordenados.map((t) => (
+              <p>
+                <a class="contato-link" href={`tel:${t.e164}`}>
+                  {t.exibicao}
+                </a>
+              </p>
+            ))
+          }
+        </div>
+
+        {
+          whatsapp && (
+            <div class="bloco">
+              <h3>WhatsApp</h3>
+              <p>
+                <a
+                  class="contato-link"
+                  href={`https://wa.me/${whatsapp.e164.replace('+', '')}`}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {whatsapp.exibicao}
+                </a>
+              </p>
+            </div>
+          )
+        }
+
+        <div class="bloco">
+          <h3>E-mail</h3>
+          <p>
+            <a class="contato-link" href={`mailto:${escritorio.email}`}>{escritorio.email}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contato-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 46px;
+  }
+
+  .bloco + .bloco {
+    margin-top: 36px;
+  }
+
+  .bloco h3 {
+    font-family: var(--corpo);
+    font-size: 11px;
+    letter-spacing: 0.21em;
+    text-transform: uppercase;
+    color: var(--carmim);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .bloco p {
+    font-size: 18px;
+  }
+
+  .bloco small {
+    color: var(--cinza);
+    font-size: 15px;
+  }
+
+  .contato-link {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contato-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: var(--carmim);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--suave);
+  }
+
+  .contato-link:hover {
+    color: var(--carmim);
+  }
+
+  .contato-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .mapa-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 13px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--carmim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--carmim);
+    padding-bottom: 3px;
+    transition: opacity 0.3s;
+  }
+
+  .mapa-link:hover {
+    opacity: 0.65;
+  }
+
+  @media (max-width: 880px) {
+    .contato-grade {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+  }
+</style>

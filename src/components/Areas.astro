@@ -1,0 +1,78 @@
+---
+import { escritorio } from '../data/escritorio';
+---
+
+<section class="secao" id="areas">
+  <div class="env">
+    <div class="rev">
+      <p class="etiqueta">Atuação</p>
+      <h2 class="secao-titulo">Áreas de atuação</h2>
+    </div>
+
+    <div class="areas">
+      {
+        escritorio.areas.map((area, i) => (
+          <article class="area rev" style={`--atraso:${(i * 0.08).toFixed(2)}s`}>
+            <h3>{area.titulo}</h3>
+            <p>{area.descricao}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .areas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+    gap: 1px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    margin-top: 46px;
+  }
+
+  .area {
+    background: var(--papel);
+    padding: 36px 30px;
+    transition:
+      background 0.4s var(--suave),
+      opacity 0.85s var(--suave),
+      transform 0.85s var(--suave);
+  }
+
+  .area:hover {
+    background: #fff;
+  }
+
+  .area.visto:hover {
+    transform: translateY(-4px);
+  }
+
+  .area h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+  .area h3::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--carmim);
+    width: 34px;
+    margin: 15px 0 16px;
+    transition: width 0.5s var(--suave);
+  }
+
+  .area:hover h3::after {
+    width: 64px;
+  }
+
+  .area p {
+    font-size: 16px;
+    color: var(--cinza);
+    line-height: 1.65;
+  }
+</style>

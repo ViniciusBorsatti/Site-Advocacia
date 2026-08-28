@@ -1,0 +1,185 @@
+---
+import { escritorio } from '../data/escritorio';
+
+const secoes = [
+  { href: '#sobre', rotulo: 'Sobre' },
+  { href: '#areas', rotulo: 'Áreas' },
+  { href: '#contato', rotulo: 'Contato' },
+];
+---
+
+<header class="topo" id="topo">
+  <div class="env topo-int">
+    <a class="marca" href="#" aria-label={`${escritorio.nome}, início`}>
+      <svg class="marca-selo" viewBox="0 0 1428 2508" aria-hidden="true">
+        <use href="#justica"></use>
+      </svg>
+      <span class="marca-nome">{escritorio.nome}</span>
+    </a>
+
+    <nav aria-label="Seções do site">
+      <ul class="menu">
+        {
+          secoes.map((s) => (
+            <li>
+              <a href={s.href}>{s.rotulo}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .topo {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 40;
+    background: rgba(253, 252, 251, 0);
+    border-bottom: 1px solid transparent;
+    transition:
+      background 0.45s var(--suave),
+      border-color 0.45s var(--suave);
+  }
+
+  .topo.fixado {
+    background: rgba(253, 252, 251, 0.93);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--linha);
+  }
+
+  .topo-int {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    height: var(--altura-topo);
+    transition: height 0.45s var(--suave);
+  }
+
+  .topo.fixado .topo-int {
+    height: var(--altura-topo-fixo);
+  }
+
+  .marca {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+  }
+
+  .marca-selo {
+    width: 0;
+    height: 30px;
+    color: var(--carmim);
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      width 0.5s var(--suave),
+      opacity 0.4s var(--suave);
+  }
+
+  .topo.fixado .marca-selo {
+    width: 20px;
+    opacity: 1;
+  }
+
+  .marca-nome {
+    font-family: var(--display);
+    font-size: 16px;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 0.5s var(--suave),
+      transform 0.5s var(--suave);
+  }
+
+  .topo.fixado .marca-nome {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .menu a {
+    position: relative;
+    font-size: 13px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cinza);
+    padding-bottom: 4px;
+    transition: color 0.3s;
+  }
+
+  .menu a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--carmim);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--suave);
+  }
+
+  .menu a:hover {
+    color: var(--carmim);
+  }
+
+  .menu a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @media (max-width: 520px) {
+    .marca-nome {
+      font-size: 13px;
+    }
+    .menu {
+      gap: 17px;
+    }
+    .menu a {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+  }
+</style>
+
+<script>
+  const topo = document.getElementById('topo');
+  const selo = document.getElementById('selo');
+  const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let pendente = false;
+
+  function aoRolar(): void {
+    const y = window.scrollY;
+    topo?.classList.toggle('fixado', y > 90);
+    if (selo && !reduzir && y < 900) {
+      selo.style.transform = `translateY(${(y * -0.05).toFixed(2)}px)`;
+    }
+    pendente = false;
+  }
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!pendente) {
+        pendente = true;
+        window.requestAnimationFrame(aoRolar);
+      }
+    },
+    { passive: true },
+  );
+
+  aoRolar();
+</script>

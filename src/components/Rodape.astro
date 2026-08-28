@@ -1,0 +1,43 @@
+---
+import { escritorio } from '../data/escritorio';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="env">
+    <div class="rodape-int">
+      <span>{escritorio.nome} · Advogada · {escritorio.oab}</span>
+      <span>{escritorio.cidadeCurta} · {ano}</span>
+    </div>
+
+    <p class="aviso">
+      Este site tem caráter meramente informativo, em conformidade com o Código de Ética e
+      Disciplina da OAB e com o Provimento nº 205/2021. O conteúdo aqui apresentado não constitui
+      oferta de serviços nem orientação jurídica sobre casos concretos.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    border-top: 1px solid var(--linha);
+    padding: 40px 0 48px;
+    color: var(--cinza);
+    font-size: 14px;
+  }
+
+  .rodape-int {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: space-between;
+  }
+
+  .aviso {
+    max-width: 58ch;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 20px;
+  }
+</style>
