@@ -4,9 +4,9 @@
  */
 
 export interface Telefone {
-  /** Como aparece na tela. Ex.: "(51) 3106-8674" */
+  /** Como aparece na tela. Ex.: "(51) 3452-3396" */
   exibicao: string;
-  /** Formato E.164, usado no link tel:. Ex.: "+555131068674" */
+  /** Formato E.164, usado no link tel:. Ex.: "+555134523396" */
   e164: string;
   /** Marque o número preferencial para contato. */
   principal?: boolean;
@@ -36,7 +36,8 @@ export interface Escritorio {
   sobre: readonly string[];
   endereco: Endereco;
   telefones: readonly Telefone[];
-  email: string;
+  /** E-mails de contato. O primeiro é o preferencial. */
+  emails: readonly string[];
   /** Somente celular com WhatsApp ativo. Deixe undefined se não houver. */
   whatsapp?: Telefone;
   horario: string;
@@ -66,12 +67,9 @@ export const escritorio: Escritorio = {
     cep: '93210-140', // CONFERIR: CEP não consta no cartão
   },
 
-  telefones: [
-    { exibicao: '(51) 3106-8674', e164: '+555131068674', principal: true },
-    { exibicao: '(51) 3452-3396', e164: '+555134523396' },
-  ],
+  telefones: [{ exibicao: '(51) 3452-3396', e164: '+555134523396', principal: true }],
 
-  email: 'luizajt@bol.com.br',
+  emails: ['luizajt@bol.com.br', 'luiza131169@gmail.com'],
 
   horario: 'Segunda a sexta, das 9h às 18h', // CONFERIR
   observacaoHorario: 'Atendimento mediante agendamento',

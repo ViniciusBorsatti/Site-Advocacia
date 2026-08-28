@@ -65,10 +65,16 @@ const ordenados = [...telefones].sort(
         }
 
         <div class="bloco">
-          <h3>E-mail</h3>
-          <p>
-            <a class="contato-link" href={`mailto:${escritorio.email}`}>{escritorio.email}</a>
-          </p>
+          <h3>{escritorio.emails.length > 1 ? 'E-mails' : 'E-mail'}</h3>
+          {
+            escritorio.emails.map((email) => (
+              <p>
+                <a class="contato-link" href={`mailto:${email}`}>
+                  {email}
+                </a>
+              </p>
+            ))
+          }
         </div>
       </div>
     </div>
